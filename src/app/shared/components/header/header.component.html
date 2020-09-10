@@ -1,0 +1,161 @@
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+  <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center shadow-sm">
+    <a class="navbar-brand brand-logo" routerLink="">
+      <!-- -->
+    <img src="../../../../assets/logo.svg"/>
+    </a>
+    <a class="navbar-brand brand-logo-mini" routerLink="">
+      <svg style="height: 55px;" xmlns="http://www.w3.org/2000/svg" version="1.0" width="177px" height="106px" viewBox="0 0 1770 1060" preserveAspectRatio="xMidYMid meet">
+<g id="layer101" fill="#5782e6" stroke="none">
+ <path d="M255 730 l-200 -200 200 -200 c110 -110 203 -200 207 -200 6 0 100 93 166 163 4 4 61 59 127 122 l120 113 -87 88 -88 89 -45 -45 -45 -44 41 -42 42 -43 -68 -75 c-37 -41 -89 -93 -115 -115 l-47 -40 -114 115 -114 114 115 115 114 115 26 -25 c14 -14 31 -25 37 -25 6 0 27 18 47 41 l37 40 -73 69 c-40 38 -75 70 -78 70 -3 0 -95 -90 -205 -200z"/>
+ <path d="M1095 729 l-199 -200 87 -87 87 -86 40 39 c22 21 40 44 40 49 0 6 -16 27 -36 47 l-37 38 67 75 c37 41 87 91 112 111 52 43 30 55 183 -92 l96 -93 -116 -114 -117 -115 -23 25 c-12 13 -28 24 -34 24 -6 0 -29 -18 -50 -40 l-39 -40 69 -70 c38 -39 73 -69 76 -68 16 7 399 387 399 397 0 10 -384 394 -398 398 -4 1 -97 -88 -207 -198z"/>
+ </g>
+<g id="layer102" fill="#00e3cf" stroke="none">
+ <path d="M740 926 c-74 -73 -150 -152 -169 -175 -18 -22 -39 -41 -45 -41 -6 0 -52 -41 -101 -90 l-90 -90 92 -92 93 -93 45 45 c25 24 45 49 45 54 0 6 -16 27 -36 47 l-37 38 49 55 c27 30 104 107 172 172 l123 117 61 -59 c34 -32 74 -71 89 -86 16 -16 32 -28 37 -28 4 0 28 20 52 45 l44 45 -134 135 c-74 74 -139 135 -145 135 -5 0 -71 -60 -145 -134z"/>
+ <path d="M1196 661 l-47 -48 42 -41 43 -41 -36 -38 c-20 -21 -56 -59 -79 -86 -23 -26 -46 -47 -51 -47 -5 0 -21 -12 -37 -27 -15 -16 -56 -55 -89 -88 l-62 -59 -89 88 -90 89 -38 -34 c-39 -34 -86 -88 -67 -76 6 3 70 -52 143 -124 73 -71 139 -129 146 -129 7 0 91 80 187 178 95 97 213 214 261 258 48 45 87 87 87 93 0 11 -82 96 -151 158 l-25 23 -48 -49z"/>
+ </g>
+</svg>
+    </a>
+  </div>
+  <div class="navbar-menu-wrapper d-flex align-items-center">
+    <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
+      <li class="nav-item" routerLink="/dashboard" routerLinkActive="active">
+        <a class="nav-link"><i class="mdi mdi-castle"></i>Management</a>
+      </li>
+      <li class="nav-item" routerLink="/reports" routerLinkActive="active">
+        <a class="nav-link" class="nav-link">
+          <i class="mdi mdi-elevation-rise"></i>Reports</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="mdi mdi-bookmark-plus-outline"></i>Payroll
+          <span class="badge badge-primary ml-1">New</span>
+          </a>
+      </li>
+    </ul>
+    <ul class="navbar-nav navbar-nav-right">
+      <span *ngIf="remainingDays <= 30" class="btn peach-gradient border-0 h4">
+      {{remainingDays}} <small class="small-text text-black-50">{{(remainingDays > 1) ? ' Days Remaining' : ' Day Remaining'}}</small>
+      </span>
+      <li class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" ngbDropdownToggle>
+          <i class="mdi mdi-help-circle"></i>
+          <span class="count">{{chkCount}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" ngbDropdownMenu aria-labelledby="messageDropdown">
+          <div class="dropdown-item">
+            <p class="mb-0 font-weight-normal float-left">Prerequisite Checks
+            </p>
+            <span class="badge badge-info badge-pill float-right">View all</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-small">
+            <span class="mdi mdi-24px mr-2" [ngClass]= "{'mdi-close-circle-outline text-danger': !user?.sessionName, 'mdi-check-circle-outline text-success': user?.sessionName}"></span> Set up Active Session
+          </a>
+          <a class="dropdown-item text-small">
+            <span class="mdi mdi-24px mr-2" [ngClass]= "{'mdi-close-circle-outline text-danger': !user?.staffCount, 'mdi-check-circle-outline text-success': user?.staffCount}"></span> Create Staff
+          </a>
+          <a class="dropdown-item text-small">
+            <span class="mdi mdi-24px mr-2" [ngClass]= "{'mdi-close-circle-outline text-danger': !user?.studentCount, 'mdi-check-circle-outline text-success': user?.studentCount}"></span> Create Student
+          </a>
+        </div>
+      </li>
+      <li *ngIf="notifications" class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" ngbDropdownToggle>
+          <i class="mdi mdi mdi-bell"></i>
+          <span class="count">{{notificationCount}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" ngbDropdownMenu aria-labelledby="notificationDropdown">
+          <a class="dropdown-item">
+            <p class="mb-0 font-weight-normal float-left">You have {{notificationCount}} new notifications
+            </p>
+            <!--<span class="badge badge-pill badge-warning float-right">View all</span>-->
+          </a>
+          <div class="dropdown-divider"></div>
+          <div *ngFor="let notification of notifications">
+          <a class="dropdown-item preview-item">
+            <div class="preview-thumbnail">
+              <div class="bg-success px-2 py-1 rounded">
+                {{notification.count}}
+              </div>
+            </div>
+            <div class="preview-item-content">
+              <h6 class="preview-subject font-weight-medium">{{notification.description}}</h6>
+              <!--<p class="font-weight-light small-text">
+                {{notification.Date}}
+              </p>-->
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          </div>
+          <!--<a class="dropdown-item preview-item">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-warning">
+                <i class="mdi mdi-tune-vertical mx-0"></i>
+              </div>
+            </div>
+            <div class="preview-item-content">
+              <h6 class="preview-subject font-weight-medium">Settings</h6>
+              <p class="font-weight-light small-text">
+                Private message
+              </p>
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item preview-item">
+            <div class="preview-thumbnail">
+              <div class="preview-icon bg-info">
+                <i class="mdi mdi-email-outline mx-0"></i>
+              </div>
+            </div>
+            <div class="preview-item-content">
+              <h6 class="preview-subject font-weight-medium">New user registration</h6>
+              <p class="font-weight-light small-text">
+                2 days ago
+              </p>
+            </div>
+          </a>-->
+        </div>
+      </li>
+      <li class="nav-item dropdown d-none d-xl-inline-block" ngbDropdown>
+        <a class="nav-link dropdown-toggle d-flex" id="UserDropdown" ngbDropdownToggle>
+          <span class="align-self-center profile-text">Hello, {{authService.myuser?.firstName | titlecase}} {{authService.myuser?.lastName | titlecase}} ({{authService.myuser?.usertype | titlecase}}) !
+          <div class="mt-1 text-white-50">{{authService.myuser?.orgName | titlecase}} </div>
+          </span>
+          <img class="img-xs rounded-circle" *ngIf="photo" [src]="photo" alt="Profile image">
+          <!--<img class="img-xs rounded-circle" src="../../../../assets/faces-clipart/pic-1.png" alt="Profile image">-->
+        </a>
+        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" ngbDropdownMenu aria-labelledby="UserDropdown">
+          <a class="dropdown-item ngbDropdownItem p-0">
+            <div class="d-flex border-bottom">
+              <div class="py-3 px-4 d-flex align-items-center justify-content-center">
+                <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
+              </div>
+              <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
+                <i class="mdi mdi-account-outline mr-0 text-gray"></i>
+              </div>
+              <div class="py-3 px-4 d-flex align-items-center justify-content-center">
+                <i class="mdi mdi-alarm-check mr-0 text-gray"></i>
+              </div>
+            </div>
+          </a>
+          <a class="dropdown-item mt-2" routerLink = "/dashboard/manage-account">
+            Manage Accounts
+          </a>
+          <a class="dropdown-item" routerLink = "/dashboard/change-password">
+            Change Password
+          </a>
+          <a class="dropdown-item">
+            Check Inbox
+          </a>
+          <a (click)="authService.logout()" class="dropdown-item">
+            Sign Out
+          </a>
+        </div>
+      </li>
+    </ul>
+    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" (click)="toggleOffcanvas()">
+      <span class="mdi mdi-menu"></span>
+    </button>
+  </div>
+</nav>

@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  uploadFilesURL: 'http://localhost/php-rest-api-with-jwt-master/uploadedfiles/',
+  apiURL: 'http://localhost/php-rest-api-with-jwt-master/v1/'
+  // uploadFilesURL: 'http://api.manazr.trikoninfosystems.com/uploadedfiles/',
+  // apiURL: 'http://api.manazr.trikoninfosystems.com/v1/'
 };
 
 /*

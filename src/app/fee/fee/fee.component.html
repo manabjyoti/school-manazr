@@ -1,0 +1,42 @@
+
+        <div class="row mb-4">
+        <div class="col-lg-12 d-flex">
+          <div class="card card-body col-md-3 mb-4 mr-4 mt-0" *ngIf="!classId">
+              <mat-form-field class="" >
+                  <mat-label>Select Grade</mat-label>
+                  <input type="text" matInput [formControl]="gradeAutoComplete" [matAutocomplete]="auto" autocomplete="off">
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedgrade($event)" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of gradeList" [value]="option">
+                      {{option.title}}
+                  </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="card card-body col-md-4 mb-4 mr-4 mt-0" *ngIf="studentList">
+              <mat-form-field class="" >
+                  <mat-label>Select Student</mat-label>
+                  <input type="text" matInput [formControl]="studentAutoComplete" [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectedstudent($event)" [displayWith]="displayStudentFn">
+                  <mat-option *ngFor="let option of studentList" [value]="option">
+                      {{option.title}}
+                  </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            
+            <app-student-card class="card col" *ngIf="selectedStudentId" [studentId]= "selectedStudentId"></app-student-card>
+
+            <div class="card col" *ngIf="classId">
+              <app-optional-fee-manage [studentId]= "selectedStudentId" [classId]= "classId" (refreshAction)="getList($event)"></app-optional-fee-manage>
+            </div>
+          </div>
+          <div class="col-lg-12">
+          
+          <div *ngIf="!gradeListData" class="juicy-peach-gradient p-3 d-inline-block"> <p>Please add Grade before adding Student </p><button routerLink='/dashboard/grade' class="btn btn-info pull-right">Add Grade</button></div>
+            <div *ngIf="selectedStudentId" class="card card-body px-4 py-3">
+                <ng2-smart-table [settings]="settings" [source]="source" ></ng2-smart-table>
+            </div>
+          </div>
+        </div>
+
+

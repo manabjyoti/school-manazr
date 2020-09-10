@@ -1,0 +1,14 @@
+@import '../../../styles';
+
+.table-compact{
+    & th{
+        white-space: nowrap;
+    }
+    & td, & th{
+        padding-left: .5rem;
+        padding-right: .2rem;
+    }
+}
+.preview-list{
+    width: 150px;
+}

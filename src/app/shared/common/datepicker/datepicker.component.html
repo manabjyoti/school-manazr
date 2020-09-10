@@ -1,0 +1,16 @@
+<div class="input-group">
+    <input
+        [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+        [(ngModel)]="inputModel"
+        placeholder="{{placeholder}}"
+        [min]='min' [max]='max'
+        readonly
+        class="form-control">
+        <div [owlDateTimeTrigger]="dt1" class="input-group-append">
+            <div class="input-group-text px-2 py-0">
+                <i class="icon-sm mdi mdi-calendar"></i>
+            </div>
+        </div>
+</div>
+<!--<owl-date-time #dt [stepMinute]="15" [hour12Timer]='true' (afterPickerClosed)="onChange()"></owl-date-time> -->
+<owl-date-time [pickerType]="'calendar'" #dt1 (afterPickerClosed)="onChange()"></owl-date-time>

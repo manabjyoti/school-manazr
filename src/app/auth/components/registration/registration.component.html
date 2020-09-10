@@ -1,0 +1,168 @@
+<!--
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="border border-light p-5">
+
+    <p class="h4 mb-4 text-center">Sign up</p>
+
+    <input type="text" name="name" ngModel required #name="ngModel" id="defaultRegisterFormFirstName" class="form-control mb-4" placeholder="Full Name">
+
+    <input type="email" name="email" ngModel required #email="ngModel" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+    <input type="password" name="password" ngModel required #password="ngModel" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+
+    <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">Minimal 8 characters lenght</small>
+
+    <input type="text" name="phone" ngModel #phone="ngModel" id="defaultRegisterPhonePassword" class="form-control" placeholder="Phone number" aria-describedby="defaultRegisterFormPhoneHelpBlock">
+
+    <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">Optional - for two step authentication</small>
+
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" name="subscribe" ngModel #subscribe="ngModel" class="custom-control-input" id="defaultRegisterFormNewsletter">
+        <label class="custom-control-label" for="defaultRegisterFormNewsletter">Subscribe to our newsletter</label>
+    </div>
+
+    <button class="btn btn-info my-4 btn-block" [disabled]="f.invalid" type="submit">Sign up</button>
+    <div>Already a user?<a [routerLink]="['/login']"> Login Here</a></div>
+    <div class="text-center">
+        <p>or sign up with:</p>
+
+        <a type="button" class="light-blue-text mx-2">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a type="button" class="light-blue-text mx-2">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a type="button" class="light-blue-text mx-2">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a type="button" class="light-blue-text mx-2">
+            <i class="fab fa-github"></i>
+        </a>
+
+        <hr>
+
+        <p>By clicking
+            <em>Sign up</em> you agree to our
+            <a href="" target="_blank">terms of service</a> and
+            <a href="" target="_blank">terms of service</a>.
+        </p>
+    </div>
+</form> 
+-->
+
+
+<div [ngClass] = "{'bg-inverse-primary p-5 bg-graphics' : isAddMode}">
+    <div *ngIf="isAddMode" class="col-lg-3">
+        <img src="../../../../assets/logo-white.svg" class="img-fluid mb-3" />
+    </div>
+    <div [ngClass] = "{'col-lg-7 offset-lg-4' : isAddMode, 'col-lg-12' : !isAddMode}">
+        <div class="card">
+            <div class="card-body" [ngClass] = "{'border border-light shadow rounded' : isAddMode}">
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <h4 class="card-title" *ngIf="isAddMode">Registration</h4>
+            <h4 class="card-title" *ngIf="!isAddMode">Manage Account</h4>
+            <div class="form-group row">
+                <label for="firstname" class="col-3 col-form-label">Full Name</label> 
+                <div class="col-5">
+                    <input type="text" placeholder="First Name" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <input type="text" placeholder="Second Name" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-3 col-form-label">Email</label> 
+                <div class="col-9">
+                    <input type="email" placeholder="Email Address" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="username" class="col-3 col-form-label">Username</label> 
+                <div class="col-9">
+                    <input type="username" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Username is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="isAddMode">
+                <label for="password" class="col-3 col-form-label">Password</label> 
+                <div class="col-9">
+                    <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="orgName" class="col-3 col-form-label">Organization Name</label> 
+                <div class="col-9">
+                    <input type="text" placeholder="Organization Name" formControlName="orgName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.orgName.errors }" />
+                    <div *ngIf="submitted && f.orgName.errors" class="invalid-feedback">
+                        <div *ngIf="f.orgName.errors.required">Organization Name is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="address" class="col-3 col-form-label">Organization Address</label> 
+                <div class="col-9">
+                <textarea id="address" formControlName="address" cols="40" rows="2" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="mobile" class="col-3 col-form-label">Contact Number</label> 
+                <div class="col-9">
+                    <input type="mobile" placeholder="Contact Number" formControlName="mobile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+                    <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                        <div *ngIf="f.mobile.errors.required">Contact Number is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="address" class="col-3 col-form-label">Package</label> 
+                <div class="col-9">
+                <select id="package" formControlName="package" class="form-control">
+                    <option value="1">Solo</option>
+                    <option value="2">Duo</option>
+                    <option value="3">Trio</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="form-group row" *ngIf="isAddMode">
+                <div class="offset-4 col-8">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Register
+                </button>
+                <div>Already a user?<a [routerLink]="['/login']"> Login Here</a></div>
+                </div>
+            </div>
+            <div class="form-group row" *ngIf="!isAddMode">
+                <div class="offset-4 col-8">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Update Account
+                </button>
+                </div>
+            </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>

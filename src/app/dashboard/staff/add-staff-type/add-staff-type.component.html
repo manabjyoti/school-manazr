@@ -1,0 +1,17 @@
+<div class="col-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+        <h4 class="card-title">Add Staff Type</h4>
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="forms-sample">
+            <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">Staff Type</label>
+            <div class="col-sm-9">
+                <input name="name" ngModel required #name="ngModel" type="text" class="form-control" id="name" placeholder="Enter Staff Type">
+            </div>
+            </div>
+            <button type="submit" class="btn btn-success mr-2" [disabled]="f.invalid">Create</button>
+            <button type="reset" class="btn btn-light">Cancel</button>
+        </form>
+        </div>
+    </div>
+</div>

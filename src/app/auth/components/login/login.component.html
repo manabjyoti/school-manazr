@@ -1,0 +1,62 @@
+<div class="bg-inverse-info p-5 bg-graphics row">
+    <div class="col-lg-3">
+        <img src="../../../../assets/logo-white.svg" class="img-fluid mb-3" />
+    </div>
+    <div class="col-lg-9">
+    </div>
+    <div class="col-lg-5">
+        <h2 class="super-header d-none d-md-block text-black-50">SMART & SIMPLE <br/><small>manazr manages for you</small></h2>
+    </div>
+    <div class="col-lg-4 offset-lg-1">
+        <div class="card">
+            <div class="border border-light card-body shadow rounded">
+                <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+                <p class="h4 mb-4 text-center">Sign in</p>
+                
+                <input type="text" name="username" ngModel required #username="ngModel" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="Username">
+
+                <input type="password" name="password" ngModel required #password="ngModel" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+
+                <div class="d-md-flex justify-content-between">
+                    <div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                            <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+                        </div>
+                    </div>
+                    <div>
+                        <a class="btn btn-sm btn-inverse-secondary" [routerLink]="['/forget-password']">Forgot password?</a>
+                    </div>
+                </div>
+
+                <button class="btn btn-info btn-block my-4" [disabled]="f.invalid" type="submit">Sign in</button>
+
+                <div class="text-center">
+                    <p>Not a member?
+                        <a
+                        [routerLink]="['/registration']">Register</a>
+                    </p>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 offset-lg-2">
+        <h2 class="super-header text-primary">Modules <br/><small>covering all your sores</small></h2>
+    </div>
+    <div class="col-lg-7">
+        <ul class="h4 p-5">
+            <li>Student Management</li>
+            <li>Staff Management</li>
+            <li>Leave Management</li>
+            <li>Fee Management</li>
+            <li>Attendance Management</li>
+            <li>Exam Management</li>
+            <li>Time-Table Management</li>
+        </ul>
+    </div>
+</div>
+

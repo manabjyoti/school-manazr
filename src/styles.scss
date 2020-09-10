@@ -1,1 +1,215 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import './assets/styles/variables';
+@import "../node_modules/compass-mixins-fixed/lib/compass";
+@import "../node_modules/compass-mixins-fixed/lib/animate";
+//@import '../node_modules/font-awesome/scss/font-awesome';
+@import '../node_modules/@mdi/font/scss/materialdesignicons';
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "./assets/styles/fonts";
+@import "./assets/styles/functions";
+@import "./assets/styles/mixins/background";
+@import "./assets/styles/mixins/animation";
+@import "./assets/styles/mixins/badges";
+@import "./assets/styles/mixins/breadcrumbs";
+@import "./assets/styles/mixins/pagination";
+@import "./assets/styles/mixins/buttons";
+@import "./assets/styles/mixins/misc";
+@import "./assets/styles/mixins/color-functions";
+@import "./assets/styles/mixins/cards";
+@import "./assets/styles/mixins/tooltips";
+@import "./assets/styles/mixins/popovers";
+@import "./assets/styles/mixins/blockqoute";
+@import "./assets/styles/accordions";
+@import "./assets/styles/breadcrumbs";
+@import "./assets/styles/forms";
+@import "./assets/styles/icons";
+@import "./assets/styles/tables";
+@import "./assets/styles/buttons";
+@import "./assets/styles/badges";
+@import "./assets/styles/cards";
+@import "./assets/styles/typography";
+@import "./assets/styles/preview";
+@import "./assets/styles/lists";
+@import "./assets/styles/bootstrap-progress";
+@import "./assets/styles/bootstrap-alerts";
+@import "./assets/styles/tabs";
+@import "./assets/styles/dropdowns";
+@import "./assets/styles/pagination";
+@import "./assets/styles/popovers";
+@import "./assets/styles/modals";
+@import "./assets/styles/nav";
+@import "./assets/styles/reset";
+@import "./assets/styles/rating";
+@import "./assets/styles/layouts";
+@import "./assets/styles/tooltips";
+@import "./assets/styles/responsive";
+@import "./assets/styles/misc";
+@import "./assets/styles/utilities";
+@import "./assets/styles/demo";
+@import "../node_modules/@angular/material/theming";
+@include mat-core();
+$candy-app-primary: mat-palette($mat-indigo);
+$candy-app-accent:  mat-palette($mat-purple, A200, A100, A400);
+$candy-app-theme:   mat-light-theme($candy-app-primary, $candy-app-accent);
+
+// Include the theme styles for only specified components.
+// @include mat-core-theme($candy-app-theme);
+// @include mat-button-theme($candy-app-theme);
+// @include mat-checkbox-theme($candy-app-theme);
+// @include mat-input-theme($candy-app-theme);
+// @include mat-autocomplete-theme($candy-app-theme);
+@include angular-material-theme($candy-app-theme);
+.super-header{
+  font-family: 'Roboto';
+  font-weight: 100;
+  font-size: 4rem;
+  line-height: 2rem;
+  margin-top: 10rem;
+}
+.navbar-nav[_ngcontent-wwt-c387] .nav-item.dropdown[_ngcontent-wwt-c387] .dropdown-toggle[_ngcontent-wwt-c387]:after{
+  content: ''!important;
+}
+
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid $success; /* green */
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid $danger; /* red */
+  }
+
+.bg-graphics{
+  background-image: url('/assets/weather.svg');
+  background-repeat: repeat-x;
+  background-position: left bottom;
+}
+
+.table{
+  font-size: .9rem;
+  & .ng2-smart-action-add-add{
+    line-height: 2.3rem;
+    &:hover{
+      text-decoration: none;
+      & span{
+        text-shadow: -1px 0px 1px #bbb;
+      }
+    }
+  }
+}
+.mat-table.table-compact{
+  tr.mat-header-row {
+    height: 40px;
+  }
+  th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+    padding-left: 1rem;
+  }
+  tr.mat-row, tr.mat-footer-row{
+    height: 2em;
+  }
+  td{
+    border: 0;
+    font-size: .8rem;
+  }
+}
+.alert-card{
+  right:0;
+  top: 10px;
+}
+
+input-filter > input{
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' id='Capa_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 489.713 489.713' style='enable-background:new 0 0 489.713 489.713;' xml:space='preserve'%3E%3Cg%3E%3Cpath d='M483.4,454.444l-121.3-121.4c28.7-35.2,46-80,46-128.9c0-112.5-91.5-204.1-204.1-204.1S0,91.644,0,204.144 s91.5,204,204.1,204c48.8,0,93.7-17.3,128.9-46l121.3,121.3c8.3,8.3,20.9,8.3,29.2,0S491.8,462.744,483.4,454.444z M40.7,204.144 c0-90.1,73.2-163.3,163.3-163.3s163.4,73.3,163.4,163.4s-73.3,163.4-163.4,163.4S40.7,294.244,40.7,204.144z'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    ::placeholder {
+      color: $orange;
+    }
+}
+.btn-compact{
+  font-size: .75rem!important;
+  @extend .py-1 , .px-2;
+}
+
+.no-filter-table .ng2-smart-filters{
+  display: none;
+}
+
+.ui-datepicker-multi{
+  @extend .w-100;
+  .ui-datepicker-group table{
+    margin:0!important;
+    td{
+      width: 34px;
+      a{
+        width: 34px;
+        margin: auto;
+        text-align: center;
+      }
+      &.highlight a{
+        @extend .btn, .btn-block, .btn-compact, .btn-info;
+      }
+      &.present a{
+        @extend .btn, .btn-block, .btn-compact, .btn-success;
+      }
+      &.absent a{
+        @extend .btn, .btn-block, .btn-compact, .btn-danger;
+      }
+    }
+  
+  }
+} 
+
+.hide-delete .ng2-smart-action.ng2-smart-action-delete-delete{
+  display: none;
+}
+
+.hide-edit .ng2-smart-action.ng2-smart-action-edit-edit{
+  display: none;
+}
+
+.table-header-rotated {
+  td {
+    width: 30px;
+  }
+  th.rotate {
+    height: 140px;
+    white-space: nowrap;
+    // Firefox needs the extra DIV for some reason, otherwise the text disappears if you rotate 
+    & div {
+      transform: 
+        // Magic Numbers
+        translate(25px, -7px)
+        // 45 is really 360-45
+        rotate(-45deg);
+      width: 30px;
+      
+    }
+    & div a {
+      // border-bottom: 1px solid #ccc;
+      padding: 5px 10px;
+    }
+  }
+}
+
+.profile-photo{
+  width: 65px;
+  height: 65px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}
+
+.attendance-calendar .mat-calendar-header{display: none;}
+
+.card-hide{
+  top:0; visibility: hidden;
+}
+.mat-option{
+  line-height: 2em!important;
+  height: 2em!important;
+}

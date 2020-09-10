@@ -1,0 +1,13 @@
+<div class="row">
+    <app-registration [userId]='id' class="col-8"></app-registration>
+    <div class="col-4">
+        <div class="card p-4">
+            <h4 class="card-title">Organization Thumbnail</h4>
+            <div class='profile-photo align-self-center' *ngIf="src" [style.background-image] = "'url('+ src +')'">
+            </div>
+            <div class="card-body p-0">
+                <input class="btn btn-compact btn-dark form-control-file mt-1" type="file" [imageToDataUrl]="options" (imageSelected)="selected($event)">
+            </div>
+        </div>
+    </div>
+</div>

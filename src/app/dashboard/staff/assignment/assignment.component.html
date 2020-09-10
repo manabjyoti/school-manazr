@@ -1,0 +1,34 @@
+<div class="card mb-4 col-lg-4">
+  <div class="card-body">
+      <small>Assigned subjects to</small> <h4 class="text-default">{{staff.FirstName | titlecase}} {{staff.LastName | titlecase}}</h4>
+        <div
+      cdkDropList
+      #assignList="cdkDropList"
+      [cdkDropListData]="assignedSubjects"
+      [cdkDropListConnectedTo]="[unassignList]"
+      class="card card-body drop-list d-block bg-inverse-success assign-list p-1"
+      (cdkDropListDropped)="drop($event)">
+      <div class="drop-box badge badge-dark m-2 p-2" *ngFor="let item of assignedSubjects" cdkDrag>{{item.Abbreviation}}</div>
+      </div>
+  
+  
+
+    <div [hidden]="authService.myuser?.usertype !== 'admin'" class="card mt-3">
+        <div class="card-header bg-inverse-primary">Unassigned Subjects
+        </div>
+      <div
+        cdkDropList
+        #unassignList="cdkDropList"
+        [cdkDropListData]="unassignedSubjects"
+        [cdkDropListConnectedTo]="[assignList]"
+        class="bg-light drop-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="drop-box badge badge-primary m-2 p-2" *ngFor="let item of unassignedSubjects" cdkDrag>{{item.Abbreviation}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="staff" class="col-lg-8 pt-2"><h4>Daily Routine</h4>
+<app-staff-routine [selectedStaffId] = "staff.StaffId"></app-staff-routine>
+</div>

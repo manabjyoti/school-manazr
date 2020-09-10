@@ -1,0 +1,217 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="cd-accordion cd-accordion--animated nav">
+    <li class="d-flex d-md-none nav-item">
+        <a class="py-3 px-4 d-flex align-items-center justify-content-center" routerLink = "/dashboard/manage-account">
+          <i class="mdi mdi-account-outline mr-0 text-gray"></i>
+        </a>
+        <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
+          <i class="mdi mdi-account-key mr-0 text-gray"></i>
+        </div>
+        <div (click)="authService.logout()" class="py-3 px-4 d-flex align-items-center justify-content-center">
+          <i class="mdi mdi-logout-variant mr-0 text-gray"></i>
+        </div>
+    </li>
+    <li class="nav-item nav-profile">
+      <div *ngIf="user?.sessionName" class="card bg-inverse-secondary">
+        <!--<div class="alert-card bg-danger p-2 position-absolute shadow rounded-left text-white">Closing Soon</div>-->
+        <div class="card-body">
+          <div class="mb-1 text-muted">Active Session</div>
+          <h5 class="card-title mb-1 d-flex justify-content-between" ngbDropdown placement="bottom-right">
+            <span class="text-default h5-responsive">{{user?.sessionName}}</span>
+            <!--<small class="text-black-50" #SessionDropdown ngbDropdownToggle>Change</small>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" ngbDropdownMenu aria-labelledby="SessionDropdown">
+            <a class="dropdown-item" routerLink = "/dashboard/manage-account">
+              Manage Accounts
+            </a>
+            <a class="dropdown-item" routerLink = "/dashboard/change-password">
+              Change Password
+            </a>
+            <a class="dropdown-item">
+              Check Inbox
+            </a>
+          </div>-->
+        </h5>
+        <div class="text-black-50 mt-1"><span class="text-primary">{{user.sessionStart | date :'mediumDate'}}</span> <span class="mdi mdi-arrow-right px-3"></span> <span class="text-primary">{{user.sessionEnd | date :'mediumDate'}}</span></div>
+      </div>
+    </div>
+    <div *ngIf="!user?.sessionName" class="card bg-danger">
+        <div class="card-body py-3">
+          <h4 class="card-title mb-3 d-flex justify-content-between" ngbDropdown placement="bottom-right">
+            <span class="text-white h5-responsive">No Active Session</span>
+        </h4>
+        <a class="btn btn-inverse-secondary" routerLink = "/dashboard/settings">
+              Set Up Session
+            </a>
+      </div>
+    </div>
+    </li>
+    <li class="cd-accordion__item cd-accordion__item--has-children" *ngIf="isAdmin">
+      <input class="cd-accordion__input" type="checkbox" name ="group-1" id="group-1">
+      <label class="cd-accordion__label cd-accordion__label--icon-folder" for="group-1"><span>Configuration</span></label>
+        <ul class="cd-accordion__sub cd-accordion__sub--l1 navbar-nav">
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/settings" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-cog"></i>
+              <span class="menu-title">Settings</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/staff-type" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-account-group"></i>
+              <span class="menu-title">Staff Type</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/class" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-file-table-box-outline"></i>
+              <span class="menu-title">Class</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/grade" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-school"></i>
+              <span class="menu-title">Grade</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/subject" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-bookshelf"></i>
+              <span class="menu-title">Subjects</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/fee/fee-type" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-cash-plus"></i>
+              <span class="menu-title">Fee Type</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/fee/fee-master" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-cash-register"></i>
+              <span class="menu-title">Fee Master</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/leave/leave-type" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-beach"></i>
+              <span class="menu-title">Leave Type</span>
+            </a>
+          </li>
+        </ul>
+    </li>
+    <li class="cd-accordion__item cd-accordion__item--has-children">
+      <input class="cd-accordion__input" type="checkbox" name ="group-staff" id="group-staff">
+      <label class="cd-accordion__label cd-accordion__label--icon-folder" for="group-staff"><span>Staff</span></label>
+        <ul class="cd-accordion__sub cd-accordion__sub--l1 navbar-nav">
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/staff" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <i class="menu-icon mdi mdi-account-details"></i>
+              <span class="menu-title">List Staff</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item" *ngIf="isAdmin">
+            <a class="cd-accordion__label" routerLink="/dashboard/staff/add" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-account-plus"></i>
+              <span class="menu-title">Add Staff</span>
+            </a>
+          </li>
+        </ul>
+    </li>
+    <li class="cd-accordion__item cd-accordion__item--has-children">
+      <input class="cd-accordion__input" type="checkbox" name ="group-student" id="group-student">
+      <label class="cd-accordion__label cd-accordion__label--icon-folder" for="group-student"><span>Student</span></label>
+        <ul class="cd-accordion__sub cd-accordion__sub--l1 navbar-nav">
+               <li class="cd-accordion__item">
+                <a class="cd-accordion__label" routerLink="/dashboard/student" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <i class="menu-icon mdi mdi-account-details-outline"></i>
+                  <span class="menu-title">List Student</span>
+                </a>
+              </li>
+              <li class="cd-accordion__item">
+                <a class="cd-accordion__label" routerLink="/dashboard/student/add" routerLinkActive="active">
+                  <i class="menu-icon mdi mdi-account-plus-outline"></i>
+                  <span class="menu-title">Add Student</span>
+                </a>
+              </li>
+        </ul>
+    </li>
+    <li class="cd-accordion__item cd-accordion__item--has-children">
+      <input class="cd-accordion__input" type="checkbox" name ="group-leave" id="group-leave">
+      <label class="cd-accordion__label cd-accordion__label--icon-folder" for="group-leave"><span>Leave</span></label>
+        <ul class="cd-accordion__sub cd-accordion__sub--l1 navbar-nav">
+               <li class="cd-accordion__item">
+                <a class="cd-accordion__label" routerLink="/dashboard/leave" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                  <i class="menu-icon mdi mdi-island"></i>
+                  <span class="menu-title">Leave Details</span>
+                </a>
+              </li>
+              
+              <li class="cd-accordion__item">
+                <a class="cd-accordion__label" routerLink="/dashboard/leave/approve-leave" routerLinkActive="active">
+                  <i class="menu-icon mdi mdi-account-plus"></i>
+                  <span class="menu-title">Approve Leaves</span>
+                </a>
+              </li>
+        </ul>
+    </li>
+    
+
+    <li class="cd-accordion__item">
+      <a class="cd-accordion__label" routerLink="/dashboard/attendence" routerLinkActive="active">
+        <i class="menu-icon mdi mdi-account-check-outline"></i>
+        <span class="menu-title">Attendence</span>
+      </a>
+    </li>
+    <li class="cd-accordion__item cd-accordion__item--has-children">
+      <input class="cd-accordion__input" type="checkbox" name ="group-routine" id="group-routine">
+      <label class="cd-accordion__label cd-accordion__label--icon-folder" for="group-routine"><span>Routine</span></label>
+        <ul class="cd-accordion__sub cd-accordion__sub--l1 navbar-nav">
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/routine" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-account-cash-outline"></i>
+              <span class="menu-title">Create Routine</span>
+            </a>
+          </li>
+          <li class="cd-accordion__item">
+            <a class="cd-accordion__label" routerLink="/dashboard/routine/staff-routine" routerLinkActive="active">
+              <i class="menu-icon mdi mdi-account-cash-outline"></i>
+              <span class="menu-title">Staff Routine</span>
+            </a>
+          </li>
+        </ul>
+    </li>
+    <li class="cd-accordion__item">
+      <a class="cd-accordion__label" routerLink="/dashboard/fee" routerLinkActive="active">
+        <i class="menu-icon mdi mdi-account-cash-outline"></i>
+        <span class="menu-title">Fee Details</span>
+      </a>
+    </li>
+    
+    <li class="cd-accordion__item cd-accordion__item--has-children">
+      <input class="cd-accordion__input" type="checkbox" name ="group-exam" id="group-exam">
+      <label class="cd-accordion__label cd-accordion__label--icon-folder" for="group-exam"><span>Exams</span></label>
+        <ul class="cd-accordion__sub cd-accordion__sub--l1 navbar-nav">
+          <li class="cd-accordion__item">
+              <a class="cd-accordion__label" routerLink="/dashboard/exam" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="menu-icon mdi mdi-head-question-outline"></i>
+                <span class="menu-title">Exams</span>
+              </a>
+            </li>
+
+            <li class="cd-accordion__item">
+              <a class="cd-accordion__label" routerLink="/dashboard/exam/marks" routerLinkActive="active">
+                <i class="menu-icon mdi mdi-timeline-help-outline"></i>
+                <span class="menu-title">Marks</span>
+              </a>
+            </li>
+
+            <li class="cd-accordion__item">
+              <a class="cd-accordion__label" routerLink="/dashboard/exam/result" routerLinkActive="active">
+                <i class="menu-icon mdi mdi-timeline-text-outline"></i>
+                <span class="menu-title">Results</span>
+              </a>
+            </li>
+        </ul>
+    </li>
+  </ul>
+</nav>

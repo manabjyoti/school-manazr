@@ -1,0 +1,38 @@
+
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <div class="d-flex">
+            <app-student-card class="card col" [studentId]= "studentId"></app-student-card>
+            <div class="card card-body p-3">
+                <h4>Select Optional Subjects</h4>
+                <section class="example-section" *ngIf="studentFlag">
+                <mat-checkbox class="mr-3" *ngFor="let subject of optionalSubjects" [checked]="checkInclude(subject.SubjectId)" (click)="saveOptionalSubjects(subject.SubjectId)">
+                {{subject.SubjectGroup}}
+                </mat-checkbox>
+                </section>
+            </div>
+        </div>
+        <div class="card">
+        <div class="card-body">
+            
+            <table class="table">
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Marks Details</th>
+                    <th>Total Marks</th>
+                </tr>
+                <tr *ngFor="let item of filtered">
+                    <td><h4>{{item.SubjectName}}</h4></td>
+                    <td><ng2-smart-table [settings]="settings" [source]="tableData | filter : 'SubjectName': item.SubjectName"></ng2-smart-table></td>
+                    <td><h4 class="{{item.Total > 30 ? 'text-success': 'text-danger'}}">{{item.Total}} <small class="text-muted"> out of {{item.WeightageCheck}}</small></h4></td>
+                </tr>
+            </table>
+        </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+

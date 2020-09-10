@@ -1,0 +1,11 @@
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Fee Type List</h4>
+        <div class="table-responsive">
+          <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)=onFormAction($event) (createConfirm)=onFormAction($event)></ng2-smart-table>
+          
+        </div>
+      </div>
+    </div>
+  </div>

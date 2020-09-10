@@ -1,0 +1,80 @@
+<div class="row mb-4 col-md-12">
+    <div class="card col-md-5">
+        <div class="card-body">
+            <h4 class="card-title mb-0">Grade View
+            </h4>
+            <div class="d-flex justify-content-between align-items-end">
+                <h3 class="text-default">{{grade | titlecase}} </h3>
+                <div>
+                    <div>
+                        <small *ngIf="!rollSet" class="text-warning">Unassigned: {{unsetRoll}}, </small>
+                        <small class="text-black-50">Total Students: {{studentArray?.length}}</small>
+                    </div>
+                <small class="d-flex justify-content-between" *ngIf="studentArray?.length > 0">
+                    <mat-checkbox aria-label="Select All" [checked]="isChecked()" [indeterminate]="isIndeterminate()" (change)="$event ? toggleAll($event) : null">
+                        Select All
+                    </mat-checkbox>
+                    <button class="btn btn-compact btn-info btn-sm mb-2" *ngIf="!rollSet" (click) = 'assignRollNumber()'>Assign Roll No.</button>
+                </small>
+                </div>
+            </div>
+
+            <div *ngIf="!studentArray" class="spinner-border"></div>
+
+            <div class="alert alert-info" *ngIf="studentArray?.length === 0">
+                No Student Assigned to this Grade.
+            </div>
+            
+            <ul class="list-group" cdkDropList #gradeListUl="cdkDropList" [cdkDropListData]="studentArray" [cdkDropListConnectedTo]="[transferListUl]" (cdkDropListDropped)="drop($event)">
+            <!--[cdkDragDisabled]="item.disabled"-->
+                <li class="list-group-item d-flex px-0 py-2" *ngFor="let item of studentArray" cdkDrag >
+                <div class="col-1 px-2">
+                <i class="mdi mdi-gender-{{item.Sex}} p-0 h4" [title]="item.Sex"></i>
+                <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? toggle(item, $event) : null"
+                    [checked]="exists(item)">
+                </mat-checkbox>
+                </div>
+               
+                <div class="col-11">
+                    <span *ngIf="item.RollNo !== 0" class="badge badge-primary">Roll No. {{item.RollNo}}</span>
+                    <strong *ngIf="item.RollNo === 0">{{item.StudentID}}</strong>
+                    <div>
+                    {{item.FirstName | titlecase}} {{item.LastName | titlecase}}
+                    </div>
+                </div>
+                
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-2 text-center">
+        <button *ngIf="studentArray && (isChecked() || isIndeterminate())" class="border-0 btn btn-sm juicy-peach-gradient jumbotron p-3">
+        <i class="mdi mdi-arrow-right-thick h2"></i><br/>Transfer Selected<div class="text-black-50 py-3 text-small">(Selected : {{selectedArr?.length}})</div></button>
+    </div>
+    <div class="card col-md-5">
+        <div class="card-body">
+            <h4 class="card-title">Transfer Grade</h4>
+            <select *ngIf="gradeList" class="form-control mb-4" #gradeSelect (change)='onTransferGradeSelect(gradeSelect.value)'>
+                <option>Select Grade</option>
+                <option *ngFor="let option of gradeList" [value]="option?.value">{{option?.title}}</option>
+            </select>
+            
+            <ul cdkDropList #transferListUl="cdkDropList" [cdkDropListData]="studentTranferArray" class="list-group" [cdkDropListConnectedTo]="[gradeListUl]" (cdkDropListDropped)="drop($event)">
+            <div class="alert alert-warning" *ngIf="studentTranferArray?.length === 0">No Data Found</div>
+            <!--[cdkDragDisabled]="item.disabled"-->
+                <li class="list-group-item d-flex px-0" *ngFor="let item of studentTranferArray" cdkDrag >
+                <div class="col-9">
+                    <strong>{{item.StudentID}}</strong>
+                    <div>
+                    {{item.FirstName | titlecase}} {{item.LastName | titlecase}}
+                    </div>
+                </div>
+                <div class="col-3">
+                {{item.Sex | titlecase}}
+                </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

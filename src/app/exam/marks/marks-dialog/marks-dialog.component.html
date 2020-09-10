@@ -1,0 +1,47 @@
+<h4 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h4>
+<h5 class="text-default mb-4">{{action}} data for {{localData.FirstName}} {{localData.LastName}}</h5>
+<div *ngif="loading" class="spinner-border"></div>
+
+<div mat-dialog-content *ngIf="exams && localData" class="d-flex flex-wrap d-75 overflow-auto">
+
+  <table class="table">
+    <tr>
+      <th>Exam name</th>
+      <th>Total Marks</th>
+      <th>Weightage</th>
+      <th>Marks Achieve</th>
+      <th>Carried</th>
+    </tr>
+    <tbody *ngFor="let exam of exams">
+    <tr>
+      <td colspan="5" class="pt-2 pb-0 juicy-peach-gradient"><h5>{{exam.header}}</h5></td>
+    </tr>
+    <tr *ngFor="let item of exam.values" >
+      <td>{{item.Name}}</td>
+      <td>{{item.TotalMarks}}</td>
+      <td>{{item.Weightage}}%</td>
+      <td class="py-0"><input placeholder="{{item.SubjectGroup + ' :: ' +item.Name}}" matInput [(ngModel)]="localData[item.ExamId]" class="border p-2" type="number" maxlength="3" min="0" [max]="item.TotalMarks"></td>
+      <td>{{((localData[item.ExamId]/item.TotalMarks)*item.Weightage)}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!--
+  <div >
+    <mat-form-field *ngFor="let item of exam.values" class="mr-4 mb-4">
+      <div class="badge p-0 position-absolute font-weight-medium text-left d-flex" style="top:100%">
+          <div class="bg-inverse-primary p-1">Total Marks: {{item.TotalMarks}}</div>
+          <div class="bg-inverse-danger p-1">Weightage: {{item.Weightage}}%</div>
+      </div>
+      <input placeholder="{{item.SubjectGroup + ' :: ' +item.Name}}" matInput [(ngModel)]="localData[item.ExamId]" type="number" maxlength="3" min="0" [max]="item.TotalMarks">
+  </mat-form-field>
+</div>-->
+  <ng-template #elseTemplate>
+    Sure to delete <b>{{localData.name}}</b>?
+  </ng-template>
+</div>
+
+<div mat-dialog-actions class="text-right mt-4">
+  <button class="btn btn-sm btn-primary" (click)="doAction()">{{localData.action}}</button>
+  <button class="btn btn-sm btn-dark ml-4" (click)="closeDialog()">Cancel</button>
+</div>

@@ -1,0 +1,75 @@
+<div *ngIf="!leaveTypeData" class="juicy-peach-gradient p-3 d-inline-block"> <p>Please add Leave Type before adding Leave </p><button routerLink='/dashboard/leave/leave-type' class="btn btn-info pull-right">Add Leave Type</button></div>
+    <mat-tab-group *ngIf="leaveTypeData" animationDuration="1000ms" class="card">
+        <mat-tab label="Leave List" *ngIf="isAddMode">
+            <ng-template matTabContent>
+                <app-list-leave></app-list-leave>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="{{isAddMode?'Add New Leave':'View/Edit Leave'}}">
+            
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="card-body">
+            <h4 class="card-title" *ngIf="isAddMode">Apply Leave</h4>
+            <h4 class="card-title" *ngIf="!isAddMode">View/Edit Leave 
+            <button class="btn btn-primary pull-right" routerLink = "/dashboard/leave">Back To Leave List</button></h4>
+            
+
+            <div class="form-group row">
+                <label for="leavetype" class="col-2 col-form-label">Leave Type</label> 
+                <div class="col-4">
+                <select id="leavetype" formControlName="leavetype" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.leavetype.errors }">
+                    <option *ngFor="let item of leaveTypeList" value="{{item.value}}">{{item.title}}</option>
+                </select>
+                <div *ngIf="submitted && f.leavetype.errors" class="invalid-feedback">
+                    <div *ngIf="f.leavetype.errors.required">Leave Type required</div>
+                </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="leavedate" class="col-2 col-form-label">Select Date</label> 
+                <div class="col-4">
+                <mat-form-field>
+                    <input matInput [matDatepickerFilter]="calendarFilter"
+                        placeholder="Choose a date"
+                        [satDatepicker]="picker2"
+                        formControlName="leavedate">
+                    <sat-datepicker #picker2 [rangeMode]="true">
+                    </sat-datepicker>
+                    <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                </mat-form-field>
+                <div *ngIf="submitted && f.leavedate.errors" class="invalid-feedback">
+                    <div *ngIf="f.leavedate.errors.required">Date required</div>
+                </div>
+                </div>
+            </div>
+
+            
+            <div class="form-group row">
+                <label for="message" class="col-2 col-form-label">Message</label> 
+                <div class="col-10">
+                <textarea id="message" formControlName="message" cols="40" rows="2" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="message" class="col-2 col-form-label">Approver</label> 
+                <div class="col-5">
+                <select formControlName="ApproverId" class="form-control">
+                    <option *ngFor="let approver of approverList" [value]="approver.value">{{approver.title}}</option>
+                </select>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="offset-4 col-8">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Save
+                </button>
+                </div>
+            </div>
+            </form>
+
+        </mat-tab>
+        
+    </mat-tab-group>

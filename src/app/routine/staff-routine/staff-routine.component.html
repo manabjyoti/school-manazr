@@ -1,0 +1,30 @@
+<div class="row mb-4">
+    <div class="col-lg-12 d-flex">
+        <div class="card">
+            <div *ngIf="!selectedStaffId" class="card-header bg-transparent d-flex justify-content-between">
+                <h4> Staff Routine</h4>
+                <select class="form-control col-md-4" (change)=employeeChange($event)>
+                    <option value="all"> Select Employee</option>
+                    <option *ngFor="let staff of staffList" [value]="staff.StaffId">{{staff.FirstName}} {{staff.LastName}}</option>
+                </select>
+            </div>
+            <div>
+                <table class="card-body table" *ngIf="tableData">
+                <tr>
+                    <th> Days </th>
+                    <th *ngFor="let value of time">
+                        {{value.Timings}}
+                    </th>
+                </tr>
+                <tr *ngFor="let day of days">
+                <td><h4>{{day}}</h4></td>
+                <td *ngFor="let value of time">
+                    <div class="mb-3 mx-2 p-2 border bg-inverse-secondary rounded" *ngFor="let item of tableData | filter: 'Day': day | filter:'Timings' : value.Timings" [innerHTML] = "getSubject(item.SubjectId, item.Timings)">
+                    </div>
+                </td>
+                </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

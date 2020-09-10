@@ -8,6 +8,26 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
+<div id="loader">
+    <style>
+      .application-loading-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .application-loading-box {
+        width: 300px;
+        margin: 5px;
+        text-align: center;
+      }
+    </style>
+    <div class="application-loading-container">
+      <div class="application-loading-box"><img src='assets/pre-loader.svg'/></div>
+    </div>
+  </div>
   <app-root></app-root>
 </body>
 </html>

@@ -1,0 +1,11 @@
+<div class="card">
+    <div class="card-body">
+        <input type="file" (change)="onFileChange($event)" />
+        <button class="btn btn-primary" (click)= "addStudents()">Add Students</button> {{validRows}} Valid Rows
+
+        <!--<div id="output" class="bg-inverse-warning rounded my-2 p-2 text-black-50">Excel Data Snapshot</div>-->
+        <div class="my-3">
+        <ng2-smart-table [settings]="settings" [source]="source"></ng2-smart-table>
+        </div>
+    </div>
+</div>

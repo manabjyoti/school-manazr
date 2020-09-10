@@ -1,0 +1,19 @@
+<div class="card col-md-12">
+    <div class="card-body">
+        <h4 class="card-title">Results View</h4>
+        <div class="row">
+        <label class="col-md-2 py-2 small text-muted">Select Grade: </label>
+        <select class="form-control col-md-3 mb-4" #gradeSelect (change)='onGradeSelect(gradeSelect.value)'>
+            <option>Select Grade</option>
+            <option *ngFor="let option of gradeList" [value]="option.value">{{option.title}}</option>
+        </select>
+        <label *ngIf="subjectListData" class="col-md-2 py-2 small text-muted text-right">Select Subject: </label>
+        <select *ngIf="subjectListData" class="form-control col-md-3  mb-4" #subjectSelect (change)='OnSubjectSelect(subjectSelect.value)'>
+            <option value="">All Subject</option>
+            <option *ngFor="let option of subjectListData" [value]="option.value">{{option.title}}</option>
+        </select>
+        </div>
+        <ng2-smart-table *ngIf="subjectListData" [settings]="settings" [source]="source" (editConfirm)=onFormAction($event)></ng2-smart-table>
+    </div>
+</div>
+

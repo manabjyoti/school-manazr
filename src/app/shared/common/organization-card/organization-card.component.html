@@ -1,0 +1,19 @@
+<div [ngClass]="{'card-body p-2': !print}" *ngIf="orgData && orgDetails">
+    <div class="d-flex align-items-center">
+    <div class="mr-3">
+        <!--<div class='profile-photo align-self-center' [style.background-image] = "'url('+ photo +')'"></div>-->
+        <img alt="Organization Profile Image" class="img-md" [src]="orgImage">
+    </div>
+    <div>
+        <h5 class="my-1">{{orgData.orgName}} <small>( ID: {{orgData.organizationId}} )</small></h5>
+        <div class="text-small">{{orgDetails.orgAddress}}</div>
+        <div class="text-small">{{orgDetails.mobile}}</div>
+    </div>
+    </div>
+    <div *ngIf="!print" class="text-muted my-2 mb-0">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-compact btn-dark">Fee</button>
+            <!--<button type="button" class="btn btn-compact {{paidStatus?'btn-success':'btn-info'}}">{{paidStatus?'Paid':'Pending'}}</button>-->
+        </div>
+    </div>
+</div>

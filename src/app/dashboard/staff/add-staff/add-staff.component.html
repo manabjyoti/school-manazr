@@ -1,0 +1,193 @@
+
+    <div *ngIf="!staffTypeData" class="juicy-peach-gradient p-3 d-inline-block"> <p>Please add Staff Type before adding Staff </p><button routerLink='/dashboard/staff-type' class="btn btn-info pull-right">Add Staff Type</button></div>
+    <mat-tab-group *ngIf="staffTypeData" animationDuration="1000ms" class="card">
+    
+        <mat-tab label="{{isAddMode?'Add New Staff':'View/Edit Staff'}}">
+            
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="card-body">
+            <h4 class="card-title" *ngIf="isAddMode">Add New Staff</h4>
+            <h4 class="card-title" *ngIf="!isAddMode">View/Edit Staff</h4>
+            
+            <div class="form-group row">
+                <label for="firstname" class="col-2 col-form-label">Staff Name</label> 
+                <div class="col-4">
+                    <input type="text" placeholder="First Name" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <input type="text" placeholder="Second Name" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="card" style="margin-top: -60px;">
+                        <img class="align-self-center card-img-top img-md" [src]="src" *ngIf="src" alt="Card image cap">
+                        <div class="card-body p-0">
+                            <input class="btn btn-compact btn-dark form-control-file mt-1" type="file" [imageToDataUrl]="options" (imageSelected)="selected($event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="isAddMode" class="form-group row">
+                <label for="username" class="col-2 col-form-label">Username</label> 
+                <div class="col-4">
+                    <input type="username" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">Username is required</div>
+                    </div>
+                </div>
+                <label for="password" class="col-2 col-form-label text-right">Password</label> 
+                <div class="col-4">
+                    <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="usertype" class="col-2 col-form-label">Staff Type</label> 
+                <div class="col-2">
+                <select id="usertype" formControlName="usertype" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usertype.errors }">
+                    <option *ngFor="let item of staffTypeList" value="{{item.title | lowercase}}">{{item.title}}</option>
+                </select>
+                <div *ngIf="submitted && f.usertype.errors" class="invalid-feedback">
+                    <div *ngIf="f.usertype.errors.required">Grade required</div>
+                </div>
+                </div>
+                <label for="sex" class="col-1 col-form-label text-right">Sex</label> 
+                <div class="col-2">
+                <select id="sex" formControlName="sex" class="form-control" (change)="changeSex($event)">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="others">Others</option>
+                </select>
+                </div>
+                <label for="text" class="col-1 col-form-label text-right">Mobile</label> 
+                <div class="col-4">
+                <input id="mobile" formControlName="mobile" type="text" class="form-control">
+                
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="dob" class="col-2 col-form-label">Date of Birth</label> 
+                <div class="col-4">
+                    <div class="input-group">
+                    <input
+                        [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+                        formControlName="dob"
+                        placeholder="Date of Birth"
+                        readonly
+                        class="form-control bg-white">
+                        <div [owlDateTimeTrigger]="dt1" class="input-group-append">
+                            <div class="input-group-text px-2 py-0">
+                                <i class="icon-sm mdi mdi-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </div>
+                <label for="pob" class="col-2 col-form-label text-right">Place Of Birth</label> 
+                <div class="col-4">
+                <input id="pob" formControlName="pob" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="address" class="col-2 col-form-label">Address</label> 
+                <div class="col-10">
+                <textarea id="address" formControlName="address" cols="40" rows="2" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fatherfn" class="col-2 col-form-label">Father's Name</label> 
+                <div class="col-3">
+                <input id="fatherfn" formControlName="fatherfn" type="text" class="form-control" placeholder="First Name">
+                </div>
+                <div class="col-3">
+                <input id="fatherln" formControlName="fatherln" type="text" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <input id="fcontact" formControlName="fcontact" type="text" class="form-control" placeholder="Mobile">
+                        <div class="input-group-append">
+                        <div class="input-group-text py-0">
+                            <i class="mdi mdi-phone-classic mdi-18px"></i>
+                        </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="motherfn" class="col-2 col-form-label">Mothers's Name</label> 
+                <div class="col-3">
+                <input id="motherfn" formControlName="motherfn" type="text" class="form-control" placeholder="First Name">
+                </div>
+                <div class="col-3">
+                <input id="motherln" formControlName="motherln" type="text" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="col-4">
+                <div class="input-group">
+                        <input id="mcontact" formControlName="mcontact" type="text" class="form-control" placeholder="Mobile">
+                        <div class="input-group-append">
+                        <div class="input-group-text py-0">
+                            <i class="mdi mdi-phone-classic mdi-18px"></i>
+                        </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="doh" class="col-2 col-form-label">Date of Hiring</label> 
+                <div class="col-2">
+                <input id="doh" formControlName="doh" type="text" class="form-control" placeholder="Date of Hiring">
+                </div>
+                <label for="yoe" class="col-1 col-form-label pr-0">Years of Exp.</label> 
+                <div class="col-1">
+                <input id="yoe" formControlName="yoe" type="text" class="form-control" placeholder="Expierience">
+                </div>
+                <label for="expertise" class="col-1 col-form-label pr-0 text-right">Expertise</label> 
+                <div class="col-5">
+                    <input id="expertise" formControlName="expertise" type="text" class="form-control" placeholder="Expertise">
+                        
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="reportsto" class="col-2 col-form-label">Reports To</label> 
+                <div class="col-4">
+                <select class="form-control" formControlName="reportsto">
+                    <option *ngFor="let staff of staffListData;" [value]='staff.value'>{{staff.title}}</option>
+                </select>
+                </div>
+
+                <label for="status" class="col-1 col-form-label pr-0 text-right">Status</label> 
+                <div class="col-2">
+                <select class="form-control" formControlName="status">
+                    <option *ngFor="let status of statuses | keyvalue" [value]='status.key'>{{status.value}}</option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-4 col-8">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Save
+                </button>
+                </div>
+            </div>
+            </form>
+
+        </mat-tab>
+        <mat-tab label="Assign Subjects" *ngIf="!isAddMode && userType === 'teacher'">
+            <ng-template matTabContent>
+                <app-assignment class="row"></app-assignment>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+            
+            

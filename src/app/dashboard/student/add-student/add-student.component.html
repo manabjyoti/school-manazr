@@ -1,0 +1,207 @@
+
+<div *ngIf="!gradeListData" class="juicy-peach-gradient p-3 d-inline-block"> <p>Please add Grade before adding Student </p><button routerLink='/dashboard/grade' class="btn btn-info pull-right">Add Grade</button></div>        
+    <mat-tab-group *ngIf="gradeListData" [selectedIndex]="selectedIndex" animationDuration="1000ms" class="card">
+
+    <mat-tab label="{{isAddMode?'Add New Student':'View/Edit Student'}}">
+      <ng-template matTabContent>
+        <div class="row mb-4">
+          <div class="col-lg-12">
+          
+            <form *ngIf="gradeListData" [formGroup]="form" (ngSubmit)="onSubmit()" class="card-body">
+            <!--<h4 class="card-title" *ngIf="isAddMode">Add New Student</h4>
+            <h4 class="card-title" *ngIf="!isAddMode">Edit Student</h4> -->
+            <div class="form-group row">
+                <label for="applicationNo" class="col-2 col-form-label">Application No.</label> 
+                <div class="col-3">
+                    <input type="text" formControlName="applicationNo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.applicationNo.errors }" />
+                </div>
+                <label for="caste" class="col-1 col-form-label text-right">Caste</label> 
+                <div class="col-2">
+                <select id="caste" formControlName="caste" class="form-control">
+                    <option value="general">General</option>
+                    <option value="st">Scheduled Tribe</option>
+                    <option value="st">Scheduled Caste</option>
+                    <option value="obc">OBC</option>
+                    <option value="others">Others</option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="firstname" class="col-2 col-form-label">Student Name</label> 
+                <div class="col-4">
+                    <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="card" style="margin-top: -65px;">
+                    <div class='profile-photo align-self-center' *ngIf="src" [style.background-image] = "'url('+ src +')'"></div>
+                        <div class="card-body p-0">
+                            <input class="btn btn-compact btn-dark form-control-file mt-1" type="file" [imageToDataUrl]="options" (imageSelected)="selected($event)">
+                            <input type="hidden" formControlName="photo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="gradeId" class="col-2 col-form-label">Grade</label> 
+                <div class="col-2">
+                <select id="gradeId" formControlName="gradeId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.gradeId.errors }">
+                    <option *ngFor="let item of gradeList" value="{{item.value}}">{{item.title}}</option>
+                </select>
+                <div *ngIf="submitted && f.gradeId.errors" class="invalid-feedback">
+                    <div *ngIf="f.gradeId.errors.required">Grade required</div>
+                </div>
+                </div>
+                <label for="sex" class="col-1 col-form-label text-right">Sex</label> 
+                <div class="col-2">
+                <select id="sex" formControlName="sex" class="form-control">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="others">Others</option>
+                </select>
+                </div>
+                <label for="text" class="col-1 col-form-label text-right">Mobile</label> 
+                <div class="col-4">
+                <input id="mobile" formControlName="mobile" type="text" class="form-control">
+                
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="dob" class="col-2 col-form-label">Date of Birth</label> 
+                <div class="col-4">
+                    <div class="input-group">
+                    <input
+                        [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1"
+                        formControlName="dob"
+                        placeholder="Date of Birth"
+                        readonly
+                        class="form-control bg-white">
+                        <div [owlDateTimeTrigger]="dt1" class="input-group-append">
+                            <div class="input-group-text px-2 py-0">
+                                <i class="icon-sm mdi mdi-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+
+                </div>
+                <label for="pob" class="col-2 col-form-label text-right">Place Of Birth</label> 
+                <div class="col-4">
+                <input id="pob" formControlName="pob" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="address" class="col-2 col-form-label">Address</label> 
+                <div class="col-10">
+                <textarea id="address" formControlName="address" cols="40" rows="2" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fatherfn" class="col-2 col-form-label">Father's Name</label> 
+                <div class="col-3">
+                <input id="fatherfn" formControlName="fatherfn" type="text" class="form-control" placeholder="First Name">
+                </div>
+                <div class="col-3">
+                <input id="fatherln" formControlName="fatherln" type="text" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        <input id="fcontact" formControlName="fcontact" type="text" class="form-control" placeholder="Mobile">
+                        <div class="input-group-append">
+                        <div class="input-group-text py-0">
+                            <i class="mdi mdi-phone-classic mdi-18px"></i>
+                        </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="motherfn" class="col-2 col-form-label">Mothers's Name</label> 
+                <div class="col-3">
+                <input id="motherfn" formControlName="motherfn" type="text" class="form-control" placeholder="First Name">
+                </div>
+                <div class="col-3">
+                <input id="motherln" formControlName="motherln" type="text" class="form-control" placeholder="Last Name">
+                </div>
+                <div class="col-4">
+                <div class="input-group">
+                        <input id="mcontact" formControlName="mcontact" type="text" class="form-control" placeholder="Mobile">
+                        <div class="input-group-append">
+                        <div class="input-group-text py-0">
+                            <i class="mdi mdi-phone-classic mdi-18px"></i>
+                        </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="siblings" class="col-2 col-form-label">Siblings</label> 
+                <div class="col-4">
+                <select class="form-control" formControlName="siblings">
+                    <option>Select Siblings</option>
+                    <option *ngFor="let sibling of siblingsList" [value]="sibling.StudentID">
+                        {{sibling.FirstName}} {{sibling.LastName}}
+                    </option>
+                </select>
+                </div>
+
+                <label for="status" class="col-1 col-form-label pr-0 text-right">Status</label> 
+                <div class="col-2">
+                <select class="form-control" formControlName="status">
+                    <option *ngFor="let status of statuses | keyvalue" [value]='status.key'>{{status.value}}</option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-4 col-8">
+                <button [disabled]="loading || !form.valid" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Save
+                </button>
+                </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Add From Excel" *ngIf="isAddMode">
+        <ng-template matTabContent>
+            <app-add-student-excel></app-add-student-excel>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Fee Details" *ngIf="!isAddMode">
+        <ng-template matTabContent>
+            <app-fee *ngIf="selectedClassId && id" [classId] = "selectedClassId" [studentId] = "id"></app-fee>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Academics" *ngIf="!isAddMode">
+        <ng-template matTabContent>
+            <app-student-academics [gradeId] = "gradeId" [studentId] = "id"></app-student-academics>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Documents" *ngIf="!isAddMode">
+        <ng-template matTabContent>
+            <app-student-docs [studentId] = "id"></app-student-docs>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="Attendance" *ngIf="!isAddMode">
+        <ng-template matTabContent>
+            <app-student-attendance [studentId] = "id"></app-student-attendance>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>
+
+

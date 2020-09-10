@@ -1,0 +1,232 @@
+<div class="row">
+    <div class="col-lg-4">
+        <div>
+            <form [formGroup]="form">
+            <h4 class="card-title">Global Settings</h4>
+            <div class="form-group row">
+                <label for="firstname" class="col-4 col-form-label">Current Session</label> 
+                <div class="col-8">
+                    <span *ngIf="!sessions" class="spinner-border spinner-border-sm mr-1"></span>
+                    <div *ngIf="activeSession > 0 && sessions.length">
+                        <span *ngFor="let session of sessions | filter : 'Id': activeSession">
+                            <strong class="mr-4">
+                                {{session.Name}}
+                            </strong>
+                            <button class="btn btn-sm btn-info" (click)="openSessionDialog(session)">Close</button>
+                        </span>
+                    </div>
+                    <div *ngIf="activeSession == 0 && sessions.length > 0" >
+                        <select id="activeSession" formControlName="activeSession" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.activeSession.errors }">
+                            <option value=''>Select Session</option>
+                            <option *ngFor="let session of sessions | filter : 'Status': 0" value="{{session.Id}}">{{session.Name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.activeSession.errors" class="invalid-feedback">
+                            <div *ngIf="f.activeSession.errors.required">Current Session is required</div>
+                        </div>
+                    </div>
+                    <div *ngIf="sessions.length == 0" >
+                        <div class='text-danger small'>Add session in Session Settings</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="reqAttendance" class="col-4 col-form-label">Min. Attendance</label> 
+                <div class="col-8">
+                    <div class="input-group">
+                        <input type="text" placeholder="Minimum Required Attendance" formControlName="reqAttendance" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.reqAttendance.errors }" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
+                    <div *ngIf="submitted && f.reqAttendance.errors" class="invalid-feedback">
+                        <div *ngIf="f.reqAttendance.errors.required">Attendance Percentage is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="passMark" class="col-4 col-form-label">Pass Mark</label> 
+                <div class="col-8">
+                    <div class="input-group">
+                    <input type="text" placeholder="Passing Mark Percentage" formControlName="passMark" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.passMark.errors }" />
+                    <div class="input-group-append">
+                            <span class="input-group-text">%</span>
+                        </div>
+                    </div>
+                    <div *ngIf="submitted && f.passMark.errors" class="invalid-feedback">
+                        <div *ngIf="f.passMark.errors.required">Pass Mark is required</div>
+                    </div>
+                </div>
+            </div>
+
+           <div class="form-group row">
+                <label for="saturdayCheck" class="col-4 col-form-label">Saturday</label> 
+                <div class="col-8">
+                <mat-radio-group aria-label="Select an option" formControlName="saturdayCheck">
+                    <mat-radio-button [checked] = "f.saturdayCheck.value === 0" value="0">Non Working Day</mat-radio-button>
+                    <mat-radio-button [checked] = "f.saturdayCheck.value === 1" class="ml-2" value="1">Working Day</mat-radio-button>
+                </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="leaves" class="col-4 col-form-label">Official Leaves</label> 
+                <div class="col-8">
+                    <div class="input-group">
+                        <input type="text" placeholder="No. of Paid Leaves allowed" formControlName="leaves" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.leaves.errors }" />
+                    </div>
+                    <div *ngIf="submitted && f.leaves.errors" class="invalid-feedback">
+                        <div *ngIf="f.leaves.errors.required">No. of Leaves is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="head" class="col-4 col-form-label">Head of Staffs</label> 
+                <div class="col-8">
+                    <select class="form-control" formControlName="head" [ngClass]="{ 'is-invalid': submitted && f.head.errors }">
+                        <option value=''>Select Head Staff</option>
+                        <option *ngFor="let staff of staffListData" [value]='staff.value'>{{staff.title}}</option>
+                    </select>
+                    <div *ngIf="submitted && f.head.errors" class="invalid-feedback">
+                        <div *ngIf="f.head.errors.required">Head of Staffs is required</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="offset-4 col-8">
+                <button [disabled]="loading" (click)="onSubmit()" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    {{activeSession > 0?'Update': 'Save'}} Settings
+                </button>
+                </div>
+            </div>
+            </form>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <div *ngIf="scanloading" class="spinner-border"></div>
+                <h4 class="d-flex align-items-center justify-content-between">
+                    <span>
+                    Fee Payment Status for all<br/>
+                    <small class="text-black-50">Fee is pending for <strong>{{feePendingCount}}</strong> student(s).</small>
+                    </span> <span class="mdi mdi-36px {{feeStatus?'mdi-check-box-outline text-success':'mdi-alert-box-outline text-danger'}}"></span></h4> 
+                    <hr/>
+                <h4 class="d-flex align-items-center justify-content-between">
+                    <span>Leave Status for all<br/>
+                    <small class="text-black-50"><strong>{{leavePendingCount}}</strong> leave(s) pending approval.</small>
+                    </span> <span class="mdi mdi-36px {{leaveStatus?'mdi-check-box-outline text-success':'mdi-alert-box-outline text-danger'}}"></span></h4> 
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card-header tempting-azure-gradient">
+            <div>Sessions Settings</div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-body p-2">
+            <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)=onFormAction($event) (createConfirm)=onFormAction($event) (deleteConfirm)=openDialog($event)></ng2-smart-table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header tempting-azure-gradient">
+                <div>Identity Card Settings</div>
+            </div>
+            <div class="card-body py-3">
+            <div class="row">
+                <div class="col-md-7">
+                    <mat-form-field class="col-md-3 pl-0">
+                        <mat-label>Width</mat-label>
+                        <input matInput [(ngModel)] = "icardSettings.width"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Height</mat-label>
+                        <input matInput [(ngModel)] = "icardSettings.height"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Padding</mat-label>
+                        <input matInput [(ngModel)] = "icardSettings.padding"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3 pr-0">
+                        <mat-label>Spacing</mat-label>
+                        <input matInput [(ngModel)] = "icardSettings.spacing"/>
+                    </mat-form-field>
+                    <section>
+                    <mat-checkbox [(ngModel)]="icardSettings.photo" class="text-black-50">
+                    Enable Photo
+                    </mat-checkbox>
+                    </section>
+                    <section>
+                    <mat-checkbox [(ngModel)]="icardSettings.fullname" class="text-black-50">
+                    Enable Full Name
+                    </mat-checkbox>
+                    </section>
+                    <section>
+                    <mat-checkbox [(ngModel)]="icardSettings.classname" class="text-black-50">
+                    Enable Class Name
+                    </mat-checkbox>
+                    </section>
+                    <section>
+                    <mat-checkbox [(ngModel)]="icardSettings.rollnumber" class="text-black-50">
+                    Enable Roll Number
+                    </mat-checkbox>
+                    </section>
+                    <section>
+                    <mat-checkbox [(ngModel)]="icardSettings.address" class="text-black-50">
+                    Enable Address
+                    </mat-checkbox>
+                    </section>
+                    <section>
+                    <mat-checkbox [(ngModel)]="icardSettings.studentid" class="text-black-50">
+                    Enable Barcode
+                    </mat-checkbox>
+                    </section>
+
+                    <section>
+                        <label class="mr-2">Align:</label>
+                        <mat-radio-group [(ngModel)]="icardSettings.align">
+                            <mat-radio-button class="mr-2 text-black-50" value="left">Left</mat-radio-button>
+                            <mat-radio-button class="mr-2 text-black-50" value="center">Center</mat-radio-button>
+                            <mat-radio-button class="text-black-50" value="right">Right</mat-radio-button>
+                        </mat-radio-group>
+                    </section>
+
+                </div>
+                <div class="col-md-5 bg-light p-3">
+                <app-i-card [card] = "icardSettings" [image] = false></app-i-card>
+                    <!--<div class="i-card-wrapper" style="
+                    padding: {{card.padding}}; 
+                    width: {{card.width}};
+                    height: {{card.height}}; 
+                    border: 1px solid #999; position: relative; background: #ffffff; margin: auto;
+                    text-align: {{card.align}}">
+                        <div>
+                            <img style="width:50%" src="../../assets/logo.png" />
+                            <hr/>
+                        </div>
+                        <img *ngIf="card.photo" src="../../assets/faces-clipart/male.png" style="width: 50px; margin-bottom: 5px;" />
+                        
+                        <h4 *ngIf="card.fullname" style="margin-bottom: 5px;">Person Name</h4>
+                        <p *ngIf="card.classname" style="margin-bottom: 5px;"><strong>Class: </strong>Class Name</p>
+                        <p *ngIf="card.rollnumber" style="margin-bottom: 5px;"><strong>Roll no.: </strong>1</p>
+                        <p *ngIf="card.address" style="margin-bottom: 5px;"><strong>Address: </strong>Some Address Goes here.</p>
+                        <ngx-barcode *ngIf="card.studentid" bc-value='Student ID' [bc-width]= 1 [bc-height]=50 [bc-font-size] = 12 [bc-display-value]="true"></ngx-barcode>
+
+                        <div style="bottom: 10px; font-size: 10px; position: absolute;color: #666;">
+                            Powered by : manazr.com
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+    </div>
+</div>
+

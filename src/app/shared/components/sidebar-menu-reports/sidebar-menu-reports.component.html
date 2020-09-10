@@ -1,0 +1,29 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="cd-accordion cd-accordion--animated nav">
+    <li class="d-flex d-md-none nav-item">
+        <a class="py-3 px-4 d-flex align-items-center justify-content-center" routerLink = "/dashboard/manage-account">
+          <i class="mdi mdi-account-outline mr-0 text-gray"></i>
+        </a>
+        <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
+          <i class="mdi mdi-account-key mr-0 text-gray"></i>
+        </div>
+        <div (click)="authService.logout()" class="py-3 px-4 d-flex align-items-center justify-content-center">
+          <i class="mdi mdi-logout-variant mr-0 text-gray"></i>
+        </div>
+    </li>
+
+    <li class="cd-accordion__item">
+        <a class="cd-accordion__label" routerLink="/reports/staff" routerLinkActive="active">
+            <i class="menu-icon mdi mdi-cog"></i>
+            <span class="menu-title">Staffs Reports</span>
+        </a>
+    </li>
+    <li class="cd-accordion__item">
+        <a class="cd-accordion__label" routerLink="/dashboard/staff-type" routerLinkActive="active">
+            <i class="menu-icon mdi mdi-account-group"></i>
+            <span class="menu-title">Students Reports</span>
+        </a>
+    </li>
+    
+  </ul>
+</nav>

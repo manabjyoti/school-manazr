@@ -1,0 +1,83 @@
+<div class="card">
+    <div class="d-flex justify-content-between mb-2">
+        <div></div>
+        <div>
+            <button mat-button class="btn btn-primary" 
+            printTitle="Payment Receipt"
+            [useExistingCss]="true" 
+            printSectionId="print-receipt" 
+            ngxPrint>Print</button>
+            <button mat-button class="btn btn-secondary ml-3" (click)="onNoClick()">Cancel</button>
+        </div>
+    </div>
+    <div class="" id="print-receipt">
+        <table class="table-bordered" cellpadding="10px" width="900in">
+            <tr>
+                <td colspan=2>
+                    <div class="">
+                        <h4>Payment Receipt</h4>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <div class="font-weight-bold">Organization Details</div>
+                    <app-organization-card [print]= true></app-organization-card>
+                </td>
+                <td width="50%">
+                    <div class="font-weight-bold">Student Details</div>
+                    <app-student-card class="card" [print]= true [studentId]= "data.row.studentId"></app-student-card>
+                </td>
+            </tr>
+            <tr>
+            <td colspan=2>
+            <table class="w-100 small table table-borderless">
+                <tr>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Pay Date
+                    </th>
+                    <th>
+                        (Amount - Discount) x Tax (%)
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                </tr>
+                <tr *ngFor="let amount of amountArr; index as i">
+                    <td class="w-50" style="width: 50%">
+                        {{data.row.Name}} | Installment #{{i+1}}
+                    </td>
+                    <td>
+                        {{paidDateArr[i] | date : 'mediumDate'}}
+                    </td>
+                    <td>({{moneyFormat(data.row.Amount)}} - {{moneyFormat(data.row.Discount)}}) x {{data.row.Tax}}%
+                    </td>
+                    <td>
+                        {{moneyFormat(amount)}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=2>
+                    </td>
+                    <th>Total Amount
+                    </th>
+                    <td>
+                        {{moneyFormat(data.row.CollectedAmount)}} 
+                    </td>
+                </tr>
+            </table>
+            </td>
+            <tr>
+                <td></td>
+                <td>
+                    <div class="text-black-50 text-small text-right">
+                        Powered by : <img src="../../../assets/logo-black.png" style="width:80px" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

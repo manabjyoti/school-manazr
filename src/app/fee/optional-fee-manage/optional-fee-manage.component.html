@@ -1,0 +1,8 @@
+<div class="card card-body p-3">
+    <h4>Select Optional Fee</h4>
+    <section *ngIf="optionalFeeType">
+    <mat-checkbox class="mr-3" *ngFor="let feetype of optionalFeeType" [checked]="checkInclude(feetype)" (change)="saveOptionalFeeType(feetype, $event)">
+    {{feetype.Name}}
+    </mat-checkbox>
+    </section>
+</div>

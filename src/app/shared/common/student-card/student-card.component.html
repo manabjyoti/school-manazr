@@ -1,0 +1,19 @@
+<div [ngClass]="{'card-body p-2': !print}" *ngIf="student">
+    <div class="clearfix">
+    <div *ngIf="!print" class="float-left mr-3">
+        <div class='profile-photo align-self-center' [style.background-image] = "'url('+ photo +')'"></div>
+    </div>
+    <div>
+        <h5 class="my-1">{{student.FirstName}} {{student.LastName}} <small><a [routerLink]='["/dashboard/student/view/",studentId]'>{{studentId}}</a></small></h5>
+        <div class="text-small">{{student.Sex == 'male'?'Son':'Daughter'}} of {{student.FatherFirstName?student.FatherFirstName:'UNKNOWN'}} {{student.FatherLastName}}</div>
+        <div class="text-small"><a [routerLink]='["/dashboard/grade/view/",student.GradeId]'>{{student.ClassName}}</a><span *ngIf="student.RollNo">, Roll No: {{student.RollNo}}</span></div>
+    </div>
+    </div>
+    <div *ngIf="!print" class="text-muted my-2 mb-0">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-compact btn-dark">Fee</button>
+            <button type="button" class="btn btn-compact {{paidStatus?'btn-success':'btn-info'}}">{{paidStatus?'Paid':'Pending'}}</button>
+        </div>
+        <app-student-attendance-capsule *ngIf="studentId" [studentId] = "studentId"></app-student-attendance-capsule>
+    </div>
+</div>

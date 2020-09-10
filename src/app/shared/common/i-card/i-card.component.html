@@ -1,0 +1,38 @@
+<div *ngIf = 'image' class="card col-md-4">
+    <div [ngClass] = "{'spinner spinner-grow p-4 bg-primary': !imageReady}" #icardimage></div>
+    <div style="width:0; overflow:hidden;"><div #icard></div></div>
+  <div class="py-3">
+    <a href="#" class="btn btn-primary">Print Card</a>
+  </div>
+</div>
+
+
+<div *ngIf="!loading" [ngClass]="{'position-absolute card-hide' : image}">
+    
+    <div #icardHTML class="i-card-wrapper" *ngFor="let item of data" style="
+        padding: {{card.padding}}; 
+        width: {{card.width}};
+        height: {{card.height}}; 
+        border: 1px solid #999; position: relative; background: #ffffff; margin: auto;
+        text-align: {{card.align}}">
+        <p style="margin-bottom: {{card.spacing}}">
+            <img style="width:50%;" src="../../assets/logo.png" />
+            <!--<hr style="margin-top: {{card.spacing}}; margin-bottom: {{card.spacing}};"/>-->
+        </p>
+        <div style="position:relative">
+        <div style="background: #ff8800;{{card.photo ? 'position: absolute;':''}}top: 12px;padding: 2px 10px;right: -{{card.padding}}; width: calc({{!card.photo ? '98%' : card.align == 'center' ? '45%':'98%'}} + {{card.padding}});color: #ffffff; text-align: center">STUDENT</div>
+        <img *ngIf="card.photo" [src]="item.Photo" style="width: 50px; margin-bottom: {{card.spacing}}; position:relative;" />
+        
+        </div>
+        <h4 *ngIf="card.fullname" style="margin-bottom: {{card.spacing}};">{{item.FullName}}</h4>
+        <div style="margin-bottom: {{card.spacing}};"><span *ngIf="card.classname && item.ClassName"><strong>Class: </strong>{{item.ClassName}}</span>
+        <span *ngIf="card.rollnumber && item.RollNo"><strong>, Roll no.: </strong>{{item.RollNo}}</span></div>
+        <div *ngIf="card.address && item.Address" style="margin-bottom: {{card.spacing}};"><strong>Address: </strong>{{item.Address}}</div>
+        <p><strong>Institute Address: </strong><br/> {{item.orgName}}</p>
+        <ngx-barcode *ngIf="card.studentid && item.StudentID" [bc-value]='item.StudentID' [bc-width]= 1 [bc-height]=50 [bc-font-size] = 12 [bc-display-value]="true"></ngx-barcode>
+
+        <div style="bottom: 10px; font-size: 10px; position: absolute;color: #666; width: 150px;right: 0;">
+            Powered by : manazr.com
+        </div>
+    </div>
+</div>

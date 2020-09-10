@@ -1,0 +1,43 @@
+<div class="card col-md-12 mb-4">
+    <div class="card-body">
+        <form [formGroup]="form">
+        <h4 class="card-title">Attendance View</h4>
+        <div class="row">
+        <label class="col-md-2 py-2 small text-muted">Select Grade: </label>
+        <select class="form-control col-md-3 mb-4" formControlName="gradeid" #gradeSelect (change)='onGradeSelect(gradeSelect.value)'>
+            <option>Select Grade</option>
+            <option *ngFor="let option of gradeList" [value]="option.value">{{option.title}}</option>
+        </select>
+        <mat-form-field *ngIf="showDatepicker" class="col-md-3" style="margin-top: -1rem;">
+            <input matInput [matDatepickerFilter]="calendarFilter"
+                placeholder="Choose a date"
+                [satDatepicker]="picker"
+                formControlName="leavedate" autocomplete = "off" (dateChange)="onDateChange($event)">
+            <sat-datepicker #picker>
+            </sat-datepicker>
+            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+        </mat-form-field>
+        </div>
+        <div *ngIf = "!isGradeAssign" class="peach-gradient p-2"> No Subject Assigned to You </div>
+        
+        <div *ngIf = "studentArray?.length > 0 && selectedDate" class="border rounded p-4">
+        <h4>Attendance <small class="pull-right">
+        <span class="mdi mdi-checkbox-blank-circle text-success"></span> Present
+        <span class="ml-3 mdi mdi-checkbox-blank-circle text-danger"></span> Absent
+        </small></h4>
+        <hr/>
+            <button mat-mini-fab class="bg-{{absentArray.length === 0 ? 'success' : absentArray.includes(student.StudentID)?'danger':'success'}} text-white m-2" (click)='attendanceClick($event, student.StudentID)' *ngFor="let student of studentArray">{{student.RollNo}}</button>
+        <hr/>
+            <div class="d-block text-right">
+                <button class="btn btn-primary" [disabled]="!selectedDate || !selectedGrade" (click)="onSubmit()">Submit Attendance</button>
+            </div>
+        </div>
+        
+        </form>
+    </div>
+</div>
+<div class="card col-md-12" *ngIf="selectedGrade">
+    <div class="card-body">
+        <app-attendance-line-chart [GradeId] = "selectedGrade"></app-attendance-line-chart>
+    </div>
+</div>
